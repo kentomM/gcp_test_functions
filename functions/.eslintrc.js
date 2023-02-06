@@ -26,6 +26,7 @@ module.exports = {
   ],
   rules: {
     "quotes": ["error", "double"],
+    "semi": ["error", "never", {"beforeStatementContinuationChars": "never"}],
     "import/no-unresolved": 0,
   },
-};
+}

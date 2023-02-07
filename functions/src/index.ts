@@ -26,7 +26,7 @@ type Address = {
   [key in ArrayElement<typeof addressKeys>]: string
 }
 
-// POSTリクエストで登録処理
+// POSTリクエストで登録処理（ドキュメントIDはユニーク）
 app.post("/addresses", async (req, res) => {
   const setData: Address = {
     postal_code: "0000001",
@@ -38,7 +38,7 @@ app.post("/addresses", async (req, res) => {
     kana_3: "ﾎﾝﾏﾁ",
     local_government_code: "13114",
   }
-  await db.collection("addresses").doc().set(setData)
+  await db.collection("addresses").doc("0000001").set(setData)
   res.send({message: "success"})
 })
 
@@ -59,6 +59,15 @@ app.get("/addresses", async (req, res) => {
     total: data.length,
     data,
   })
+})
+
+// データを削除
+app.delete("/addresses", async (req, res) => {
+  const deletedPostalCode = "0000001"
+  await db.collection("addresses")
+      .doc(deletedPostalCode)
+      .delete()
+  res.send({message: "success"})
 })
 
 // apiが動くようにする

@@ -102,9 +102,9 @@ export const registerAddresses = async () => {
 
   // わけたarrayをpub/subで送信
   /******** ローカル実行時にはコメントアウトを無くす *********/
-  const [topics] = await pubsub.getTopics()
-  const testTopic = topics.filter((tp)=> tp.name.includes(cons.PUBSUB_TOPIC_ADD_DOC))?.[0]
-  if (!testTopic) await pubsub.createTopic(cons.PUBSUB_TOPIC_ADD_DOC)
+  // const [topics] = await pubsub.getTopics()
+  // const testTopic = topics.filter((tp)=> tp.name.includes(cons.PUBSUB_TOPIC_ADD_DOC))?.[0]
+  // if (!testTopic) await pubsub.createTopic(cons.PUBSUB_TOPIC_ADD_DOC)
   /******** ここまで *******/
   const topic = pubsub.topic(cons.PUBSUB_TOPIC_ADD_DOC)
   let loopCount = 0

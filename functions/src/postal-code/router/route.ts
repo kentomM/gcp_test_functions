@@ -3,8 +3,8 @@ import * as express from "express"
 import * as admin from "firebase-admin"
 
 import * as cons from "../const"
-import { deleteCollection, registerAddresses } from "../scripts/firestore"
-import { Address } from "../types/address"
+import {deleteCollection, registerAddresses} from "../scripts/firestore"
+import {Address} from "../types/address"
 
 export const app = express()
 
@@ -22,30 +22,30 @@ app.get("/addresses/:postalCode", async (req, res) => {
   const firstTwoDigis = postalCode.substring(0, 2)
 
   const doc = await db
-    .collection(cons.FIRESTORE_COLLECTION)
-    .doc(firstTwoDigis)
-    .get()
+      .collection(cons.FIRESTORE_COLLECTION)
+      .doc(firstTwoDigis)
+      .get()
 
   if (!doc.data()) {
     res.send([])
     return
   }
-  
+
   const addresses: Address[] = doc.data()?.data
   const result: Address[] = addresses.reduce(
-    (prev, address) => {
-      if (address.postal_code == postalCode) {
-        let currentJSON = JSON.stringify(Object.entries(address).sort())
-        let alreadyIncluded = prev.some(prevAddress => {
-          let prevJSON = JSON.stringify(Object.entries(prevAddress).sort())
-          return currentJSON === prevJSON
-        })
-        if (!alreadyIncluded) {
-          prev.push(address)
+      (prev, address) => {
+        if (address.postal_code == postalCode) {
+          const currentJSON = JSON.stringify(Object.entries(address).sort())
+          const alreadyIncluded = prev.some((prevAddress) => {
+            const prevJSON = JSON.stringify(Object.entries(prevAddress).sort())
+            return currentJSON === prevJSON
+          })
+          if (!alreadyIncluded) {
+            prev.push(address)
+          }
         }
-      }
-      return prev
-    }, [] as Address[]
+        return prev
+      }, [] as Address[]
   )
   res.send(result)
 })

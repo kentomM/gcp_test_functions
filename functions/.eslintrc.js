@@ -28,5 +28,6 @@ module.exports = {
     "quotes": ["error", "double"],
     "semi": ["error", "never", {"beforeStatementContinuationChars": "never"}],
     "import/no-unresolved": 0,
+    "valid-jsdoc": 0,
   },
 }

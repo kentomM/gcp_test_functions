@@ -1,7 +1,7 @@
 import * as admin from "firebase-admin"
 
-import {deleteCollection, registerAddresses} from "../scripts/firestore"
 import * as cons from "../const"
+import {deleteCollection, registerAddresses} from "../scripts/firestore"
 
 export const changeAddresses = async () => {
   const db = admin.firestore()

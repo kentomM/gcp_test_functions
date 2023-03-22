@@ -20,6 +20,7 @@ export const addDocumentsPubSub = functions
     .onPublish((message) => {
       const data: {key:string, records: Address[]} = message.json
       insertAddresses(data.key, data.records)
+
       return 0
     })
 
@@ -29,7 +30,7 @@ export const changeAddressesBatch = functions
     .pubsub
     .schedule("1 of month 01:00")
     .timeZone("Asia/Tokyo")
-    .onRun((ctx) => {
+    .onRun(() => {
       changeAddresses()
       return null
     })
